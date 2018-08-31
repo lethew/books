@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: kingdom
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.18:3306/crawler?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: AbcRootMysql123456
+  redis:
+    host: 192.168.0.18
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
