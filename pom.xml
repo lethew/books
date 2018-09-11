@@ -6,7 +6,7 @@
 
     <groupId>studio.greeks</groupId>
     <artifactId>books</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
@@ -24,8 +24,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
+        <docker.maintainer>测试服务</docker.maintainer>
+        <docker.image.prefix>springboot</docker.image.prefix>
+
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     </properties>
 
+    <!--包发布地址定义-->
+    <distributionManagement>
+        <!--releases版本的jar包发布地址-->
+        <repository>
+            <id>releases</id>
+            <url>https://dev.abcbooking.cn:82/nexus/content/repositories/releases</url>
+        </repository>
+        <!--snapshots版本的jar包发布地址-->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://dev.abcbooking.cn:82/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 
     <dependencies>
@@ -71,6 +89,46 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <serverId>docker-hub</serverId>
+                    <registryUrl>http://192.168.1.102:5000</registryUrl>
+                    <imageName>192.168.1.102:5000/${docker.image.prefix}/${project.artifactId}</imageName>
+
+                    <dockerHost>http://192.168.1.3:2375</dockerHost>
+                    <!--<dockerCertPath>C:\Users\admin\.docker\machine\machines\manager</dockerCertPath>-->
+
+                    <image>192.168.1.102:5000/${docker.image.prefix}/${project.artifactId}:latest</image>
+                    <newName>192.168.1.102:5000/${docker.image.prefix}/${project.artifactId}:${maven.build.timestamp}</newName>
+
+                    <baseImage>java:8</baseImage>
+                    <maintainer>${docker.maintainer}</maintainer>
+                    <volumes>/tmp</volumes>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>tag</goal>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

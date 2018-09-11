@@ -3,8 +3,8 @@ package studio.greeks.books.crawler.impl;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import studio.greeks.books.crawler.AbstractNavGetter;
 import studio.greeks.books.crawler.Crawler;
-import studio.greeks.books.crawler.NavGetter;
 import studio.greeks.books.entity.Chapter;
 import studio.greeks.books.entity.Index;
 import studio.greeks.books.util.Request;
@@ -12,10 +12,6 @@ import studio.greeks.books.util.Request;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class _88dusComCrawler implements Crawler {
     private static final String ROOT = "https://www.88dus.com/";
@@ -23,17 +19,13 @@ public class _88dusComCrawler implements Crawler {
     public List<Index> indexes() {
         Document document = Request.get(ROOT);
         Elements navElements = document.select(".nav_l li a");
-        List<Index> indices = new ArrayList<>();
-        ExecutorService service = Executors.newFixedThreadPool(navElements.size()-1);
         List<NavGetter> getters = new ArrayList<>();
         for (int i = 1; i < navElements.size(); i++) {
             Element navElement = navElements.get(i);
             NavGetter getter = new NavGetter(navElement);
             getters.add(getter);
         }
-        submit(indices, service, getters);
-        service.shutdown();
-        return indices;
+        return submit(getters);
     }
 
     @Override
@@ -69,15 +61,14 @@ public class _88dusComCrawler implements Crawler {
         return content;
     }
 
-    class NavGetter implements studio.greeks.books.crawler.NavGetter {
-        private Element navElement;
+    class NavGetter extends AbstractNavGetter {
 
-        NavGetter(Element navElement) {
-            this.navElement = navElement;
+        protected NavGetter(Element navElement) {
+            super(navElement);
         }
 
         @Override
-        public List<Index> call() throws Exception {
+        protected List<Index> doGet() {
             String type = navElement.text();
             String url = navElement.absUrl("href");
             List<Index> indices = new ArrayList<>();

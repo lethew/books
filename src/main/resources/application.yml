@@ -11,6 +11,7 @@ spring:
   redis:
     host: 192.168.0.18
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
+

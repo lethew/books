@@ -30,13 +30,14 @@ public class Index {
     private String lastUpdate;
 
     public Index() {
+        this.createTime = new Date();
     }
 
     public Index(String name, String indexUrl, String type) {
+        this();
         this.name = name;
         this.indexUrl = indexUrl;
         this.type = type;
-        this.createTime = new Date();
     }
 
     public String getId() {
@@ -149,5 +150,25 @@ public class Index {
 
     public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "Index{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", coverUrl='" + coverUrl + '\'' +
+                ", coverPath='" + coverPath + '\'' +
+                ", indexUrl='" + indexUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", localDir='" + localDir + '\'' +
+                ", length=" + length +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                '}';
     }
 }

@@ -25,6 +25,7 @@ public class Chapter {
     private Integer length;
     private Date createTime;
     private Date updateTime;
+    private boolean hasCache;
 
     public Chapter() {
     }
@@ -107,5 +108,29 @@ public class Chapter {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public boolean isHasCache() {
+        return hasCache;
+    }
+
+    public void setHasCache(boolean hasCache) {
+        this.hasCache = hasCache;
+    }
+
+    @Override
+    public String toString() {
+        return "Chapter{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", localPath='" + localPath + '\'' +
+                ", rank=" + rank +
+                ", nid='" + nid + '\'' +
+                ", length=" + length +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", hasCache=" + hasCache +
+                '}';
     }
 }

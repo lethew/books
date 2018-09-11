@@ -1,6 +1,7 @@
 package studio.greeks.books.util;
 
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -64,8 +65,10 @@ public final class Request {
                     case "GET":
                         return connection.timeout(DEFAULT_TIME_OUT).get();
                 }
-            } catch (IOException e) {
-                LOGGER.error(e.getMessage(),e);
+            } catch (Exception e) {
+                if(e instanceof HttpStatusException) {
+                    LOGGER.error(String.format("Msg:%s,URL:%s Status:%s", e.getMessage(),((HttpStatusException) e).getUrl(), ((HttpStatusException) e).getStatusCode()), e);
+                }
                 LOGGER.debug("Try GET:{}"+connection.request().url());
                 try {
                     Thread.sleep(DEFAULT_SLEEP_TIMES);
