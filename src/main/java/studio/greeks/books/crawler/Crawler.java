@@ -51,13 +51,15 @@ public interface Crawler {
     static List<Chapter> doGetChapters(Index index) {
         try {
             logger.info(index.toString());
-            Source source = Source.get(new URL(index.getIndexUrl()));
-            if (null != source) {
-                Crawler crawler = source.getCrawler();
-                List<Chapter> chapters = crawler.chapters(index);
-                return chapters;
-            } else {
-                logger.error("无法匹配到相应的爬虫程序，地址：{}", index.getIndexUrl());
+            if(index.getIndexUrl().startsWith("http")) {
+                Source source = Source.get(new URL(index.getIndexUrl()));
+                if (null != source) {
+                    Crawler crawler = source.getCrawler();
+                    List<Chapter> chapters = crawler.chapters(index);
+                    return chapters;
+                } else {
+                    logger.error("无法匹配到相应的爬虫程序，地址：{}", index.getIndexUrl());
+                }
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

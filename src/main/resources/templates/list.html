@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    	<style type="text/css">
+			.content {
+				width: 100%;
+
+			}
+			
+			.search {
+				width: 500px;
+				margin-left: 3em;
+			}
+			
+			.nav {
+				width: inherit;
+				text-align: right;
+			}
+			
+			.list,.page {
+				/*margin-top: 1em;*/
+				/*margin-left: 3em;*/
+				/*margin-right: 0em;*/
+				margin: 0 auto;
+			}
+			
+			.list .item {
+				padding: 0.5em 0 0.5em 0;
+				margin: 0.5em 0 0.5em 0;
+				border: solid thin #ddd;
+			}
+			.item .info {
+				height: inherit;
+			}
+			.info .author,.title,.new{
+				display: inline-block;
+				margin-right: 1em;
+			}
+			.info .desc{
+				margin-top: 1em;
+				color: #8F8F94;
+			}
+			.item .score{
+				text-align: center;
+				/*vertical-align: middle;*/
+			}
+			.score span{
+				display: block;
+				vertical-align: middle;
+			}
+			.item .score .num{
+				width: 100%;
+				font-family: "comic sans ms";
+				font-size: 5em;
+			}
+			/*.info .tag{
+				position: absolute;  
+				bottom: 0;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="nav">
+				<div class="btn-group">
+					<button class="btn btn-default" data-toggle="popover">
+						<span class="glyphicon glyphicon-log-in"></span>
+					</button>
+					<!--<button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="glyphicon glyphicon-th"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li class="dropdown-header">个人中心</li>
+						<li><a href="#">书架</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">系统</li>
+						<li><a href="#">设置</a></li>
+						<li><a href="#">退出</a></li>
+					</ul>-->
+				</div>
+			</div>
+			<div class="search">
+				<div class="input-group input-group-lg">
+					<input type="text" class="form-control" placeholder="请输入小说、作者、主角名称">
+					<span class="input-group-btn">
+			        <button class="btn btn-default" type="button">搜索</button>
+			      </span>
+				</div>
+			</div>
+			<div class="row list">
+				<div class="item col-sm-9" th:each="item:${items}">
+					<div class="cover-img col-sm-2">
+						<img th:src="${item.coverUrl}" width="100%"/>
+						<span></span>
+					</div>
+					<div class="info col-sm-8">
+						<a th:href="${'chapters.html?id='+item.id}"><h3 class="title" th:text="${item.name}">超神学院之文明导师</h3></a>
+						<h5 class="author" th:text="${item.author}">小小虾</h5>
+						<!--<h5 class="new">最新：<a>第2312章 完美世界</a></h5>-->
+						<!--<div class="tag">-->
+							<!--<span class="label label-default">Default</span>-->
+							<!--<span class="label label-primary">Primary</span>-->
+							<!--<span class="label label-success">Success</span>-->
+							<!--<span class="label label-info">Info</span>-->
+							<!--<span class="label label-warning">Warning</span>-->
+							<!--<span class="label label-danger">Danger</span>-->
+						<!--</div>-->
+						<div class="desc" th:text="${item.description}">
+							“死神卡尔让饕餮大军入侵地球，现在形势非常严峻。”李维道：“卡尔那小子啊，是我学生。”“莫甘娜在地球上散播的恶魔基因，现在整个地球遍布恶魔。”李维道：“莫甘娜也是我学生。”葛小伦吐槽道：“喂喂，老师，你教的学生怎么个个都跟地球对着干啊！”赵信大胆猜测道：“难道李老师就是入侵地球的最大主谋？”李维悠悠地道：“不不不，我这不是还教了杜卡奥瑞兹，还有你们雄兵连，不都是专门保护地球的学生吗？”本书群号：694235748，欢迎各位道友一起来探讨超神学院
+						</div>
+					</div>
+					<div class="score col-sm-2">
+						<span class="num">9.4</span>
+						<span>字数：<label>1231000</label></span>
+						<span>人气：<label>123</label></span>
+						<span>评论：<label>123</label></span>
+						
+					</div>
+				</div>
+
+			</div>
+			<div class="page">
+				<nav aria-label="Page navigation">
+				  <ul class="pagination">
+				    <li class="disabled">
+				      <a href="#" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <li class="active"><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li>
+				      <a href="#" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+		</div>
+	</body>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+        function search(){
+            window.location.href = $(".search div input").val();
+        }
+        $('.search div button').click(search)
+
+        $('.search div input').bind('keyup', function(event) {
+            if (event.keyCode == "13") {
+                //回车执行查询
+                search();
+            }
+        });
+	</script>
+</html>

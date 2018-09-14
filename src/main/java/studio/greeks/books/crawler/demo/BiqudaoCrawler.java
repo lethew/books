@@ -15,8 +15,8 @@ import java.util.concurrent.Future;
 
 public class BiqudaoCrawler {
     public static void main(String[] args) throws Exception {
-        Document document = Request.get("https://www.biqudao.com/bqge167000/");
-        FileWriter writer = new FileWriter("异世之万界召唤系统_3.txt");
+        Document document = Request.get("https://www.biqudao.com/bqge114904/");
+        FileWriter writer = new FileWriter("最强神话帝皇_3.txt");
         Elements elements = document.select("#list dl dd a");
         List<Get> gets = new ArrayList<Get>();
         int i = 0;

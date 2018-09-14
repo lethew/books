@@ -20,7 +20,7 @@ public class IndexRunner implements ApplicationRunner {
     private QueueService queueService;
 
     @Override
-    public void run(ApplicationArguments args) throws InterruptedException {
+    public void run(ApplicationArguments args){
         for (Source.Frequency frequency : Source.Frequency.values()) {
             new Timer().schedule(new IndexTask(indexRepository, queueService, frequency), 0, frequency.getTime());
         }

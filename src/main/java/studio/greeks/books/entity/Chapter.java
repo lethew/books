@@ -10,7 +10,9 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_novel_chapter", indexes = {
-        @javax.persistence.Index(name = "chapter_url_index",columnList = "url",unique = true)
+        @javax.persistence.Index(name = "chapter_url_index",columnList = "url",unique = true),
+        @javax.persistence.Index(name = "chapter_nid_index",columnList = "nid",unique = false),
+        @javax.persistence.Index(name = "chapter_rank_index",columnList = "rank",unique = false)
 })
 public class Chapter {
     @Id

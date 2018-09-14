@@ -74,21 +74,25 @@ public class _88dusComCrawler implements Crawler {
             List<Index> indices = new ArrayList<>();
             while (url != null) {
                 Document indexDocument = Request.get(url);
-                Elements indexElements = indexDocument.select(".booklist ul li");
-                for (int j = 1; j < indexElements.size(); j++) {
-                    Element currentElement = indexElements.get(j);
-                    Index index = new Index(currentElement.select(".sm").text(), currentElement.select(".sm a").last().absUrl("href"), type);
-                    index.setStatus(currentElement.select(".zt").text());
-                    index.setLength(Long.parseLong(currentElement.select(".zs").text().replace("字","")));
-                    index.setAuthor(currentElement.select(".zz").text());
-                    index.setLastUpdate(currentElement.select(".sj").text());
-                    indices.add(index);
-                }
+                if(null != indexDocument) {
+                    Elements indexElements = indexDocument.select(".booklist ul li");
+                    for (int j = 1; j < indexElements.size(); j++) {
+                        Element currentElement = indexElements.get(j);
+                        Index index = new Index(currentElement.select(".sm").text(), currentElement.select(".sm a").last().absUrl("href"), type);
+                        index.setStatus(currentElement.select(".zt").text());
+                        index.setLength(Long.parseLong(currentElement.select(".zs").text().replace("字", "")));
+                        index.setAuthor(currentElement.select(".zz").text());
+                        index.setLastUpdate(currentElement.select(".sj").text());
+                        indices.add(index);
+                    }
 
-                Elements pagelink = indexDocument.select("#pagelink .next");
-                if(pagelink.size()==1){
-                    url = pagelink.last().absUrl("href");
-                }else{
+                    Elements pagelink = indexDocument.select("#pagelink .next");
+                    if (pagelink.size() == 1) {
+                        url = pagelink.last().absUrl("href");
+                    } else {
+                        url = null;
+                    }
+                } else{
                     url = null;
                 }
             }

@@ -95,28 +95,32 @@ public class _31xsNetCrawler implements Crawler {
             List<Index> indices = new ArrayList<>();
             while (url != null) {
                 Document indexDocument = Request.get(url);
-                Elements indexElements = indexDocument.select("tr");
-                for (Element indexElement : indexElements) {
-                    Element nameElement = indexElement.selectFirst("td a");
-                    if(nameElement != null) {
-                        Index index = new Index(nameElement.text(), nameElement.absUrl("href"), type);
-                        Element lastElement = indexElement.selectFirst(".even");
-                        lastElement.select("a").remove();
-                        index.setLastUpdate(lastElement.text());
-                        index.setAuthor(indexElement.select(".odd").last().text());
-                        index.setLength(Long.parseLong(indexElement.select(".center").last().text().replace("千字","000")));
-                        if(indexElement.selectFirst("td").text().endsWith("（完）")){
-                            index.setStatus("已完结");
-                        }else{
-                            index.setStatus("连载中");
+                if(null != indexDocument) {
+                    Elements indexElements = indexDocument.select("tr");
+                    for (Element indexElement : indexElements) {
+                        Element nameElement = indexElement.selectFirst("td a");
+                        if (nameElement != null) {
+                            Index index = new Index(nameElement.text(), nameElement.absUrl("href"), type);
+                            Element lastElement = indexElement.selectFirst(".even");
+                            lastElement.select("a").remove();
+                            index.setLastUpdate(lastElement.text());
+                            index.setAuthor(indexElement.select(".odd").last().text());
+                            index.setLength(Long.parseLong(indexElement.select(".center").last().text().replace("千字", "000")));
+                            if (indexElement.selectFirst("td").text().endsWith("（完）")) {
+                                index.setStatus("已完结");
+                            } else {
+                                index.setStatus("连载中");
+                            }
+                            indices.add(index);
                         }
-                        indices.add(index);
                     }
-                }
-                Elements pageElements = indexDocument.select("#content .bottem1 a");
-                if(pageElements.last().text().equals("下一页")){
-                    url = pageElements.last().absUrl("href");
-                }else{
+                    Elements pageElements = indexDocument.select("#content .bottem1 a");
+                    if (pageElements.last().text().equals("下一页")) {
+                        url = pageElements.last().absUrl("href");
+                    } else {
+                        url = null;
+                    }
+                }else {
                     url = null;
                 }
             }

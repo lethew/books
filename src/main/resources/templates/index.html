@@ -1,12 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>小说搜搜</title>
-</head>
-<body>
-<div style="text-align: center; width: 100%; margin-top: 300px">
-    <input type="text"> <button>搜索</button>
-</div>
-</body>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title></title>
+
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+
+		<style type="text/css">
+			.content {
+				width: 100%;
+			}
+			
+			.search {
+				width: 500px;
+				margin: 300px auto;
+			}
+			
+			.nav {
+				width: inherit;
+				text-align: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="nav">
+				<div class="btn-group">
+					<button class="btn btn-default" data-toggle="popover">
+						<span class="glyphicon glyphicon-log-in"></span>
+					</button>
+					<!--<button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="glyphicon glyphicon-th"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li class="dropdown-header">个人中心</li>
+						<li><a href="#">书架</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">系统</li>
+						<li><a href="#">设置</a></li>
+						<li><a href="#">退出</a></li>
+					</ul>-->
+				</div>
+			</div>
+			<div class="search">
+				<div class="input-group input-group-lg">
+					<input type="text" class="form-control" placeholder="请输入小说、作者、主角名称">
+					<span class="input-group-btn">
+			        <button class="btn btn-default" type="button">搜索</button>
+			      </span>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		$(function() {
+		    function search(){
+		        window.location.href = "list.html?word="+$(".search div input").val();
+			}
+			$('.search div button').click(search)
+
+            $('.search div input').bind('keyup', function(event) {
+                if (event.keyCode == "13") {
+                    //回车执行查询
+                    search();
+                }
+            });
+			$('[data-toggle="popover"]').popover({
+				trigger: 'click',
+				placement: 'left',
+				container: 'body',
+				title: "快速登录",
+				html: true,
+				content: '<div><form class="form-signin">' +
+					'<input type="email" id="inputEmail" class="form-control" placeholder="账户" required="" autofocus="">' +
+					'<input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">' +
+					'<div class="checkbox">' +
+					'  <label class="pull-left">' +
+					'    <input type="checkbox" value="remember-me"> 记住我' +
+					'  </label>' +
+					'  <label class="pull-right"><a>找回密码？</a></lable>' +
+					'</div>' +
+					'<button class="btn btn-default btn-block" type="submit">登录</button>' +
+					'</form></div>'
+			})
+		})
+	</script>
+
 </html>

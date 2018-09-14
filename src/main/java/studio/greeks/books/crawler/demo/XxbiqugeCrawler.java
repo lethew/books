@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class XxbiqugeCrawler {
     public static void main(String[] args) throws IOException {
-        Document document = Request.get("https://www.xxbiquge.com/9_9933/");
-        FileWriter writer = new FileWriter("逆天邪神.txt");
+        Document document = Request.get("https://www.xxbiquge.com/76_76891/");
+        FileWriter writer = new FileWriter("最强神话帝皇.txt");
         Elements elements = document.select("#list dl dd a");
         for (Element element : elements) {
             Document chapter = Request.get(element.absUrl("href"));
